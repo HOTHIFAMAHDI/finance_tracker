@@ -1,27 +1,17 @@
 import 'package:flutter/material.dart';
 
 class BalanceOverviewCard extends StatelessWidget {
-  const BalanceOverviewCard({super.key});
+  const BalanceOverviewCard({super.key, required this.balance});
+  final double balance;
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Theme.of(context).colorScheme.inversePrimary,
-              Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
-              //Theme.of(context).colorScheme.inversePrimary,
-            ],
-          ),
-          borderRadius: BorderRadius.circular(16),
-        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -30,7 +20,7 @@ class BalanceOverviewCard extends StatelessWidget {
               children: [
                 const Text(
                   'Current Balance',
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+                  style: TextStyle(fontSize: 16, color: Colors.grey),
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(
@@ -63,64 +53,47 @@ class BalanceOverviewCard extends StatelessWidget {
               style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildBalanceDetail(
-                  context,
-                  Icons.calendar_today,
-                  'This Month',
-                  '\$1,250.00',
-                ),
-                _buildBalanceDetail(
-                  context,
-                  Icons.account_balance_wallet,
-                  'This Year',
-                  '\$12,500.00',
-                ),
-              ],
-            ),
           ],
         ),
       ),
     );
   }
-
-  Widget _buildBalanceDetail(
-    BuildContext context,
-    IconData icon,
-    String label,
-    String amount,
-  ) {
-    return Row(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Icon(
-            icon,
-            color: Theme.of(context).colorScheme.primary,
-            size: 20,
-          ),
-        ),
-        const SizedBox(width: 8),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              label,
-              style: const TextStyle(
-                fontSize: 12,
-                color: Color.fromARGB(255, 55, 54, 54),
-              ),
-            ),
-            Text(amount, style: const TextStyle(fontWeight: FontWeight.bold)),
-          ],
-        ),
-      ],
-    );
-  }
 }
+
+// Widget _buildBalanceDetail(
+//   BuildContext context,
+//   IconData icon,
+//   String label,
+//   String amount,
+// ) {
+//   return Row(
+//     children: [
+//       Container(
+//         padding: const EdgeInsets.all(8),
+//         decoration: BoxDecoration(
+//           color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+//           borderRadius: BorderRadius.circular(8),
+//         ),
+//         child: Icon(
+//           icon,
+//           color: Theme.of(context).colorScheme.primary,
+//           size: 20,
+//         ),
+//       ),
+//       const SizedBox(width: 8),
+//       Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           Text(
+//             label,
+//             style: const TextStyle(
+//               fontSize: 12,
+//               color: Color.fromARGB(255, 55, 54, 54),
+//             ),
+//           ),
+//           Text(amount, style: const TextStyle(fontWeight: FontWeight.bold)),
+//         ],
+//       ),
+//     ],
+//   );
+// }
