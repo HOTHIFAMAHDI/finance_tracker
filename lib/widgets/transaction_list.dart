@@ -6,10 +6,12 @@ import '../models/transaction.dart';
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
   final Function(String) onDeleteTransaction;
+  final Function(Transaction)? onTransactionTap;
   const TransactionList({
     super.key,
     required this.transactions,
     required this.onDeleteTransaction,
+    this.onTransactionTap,
   });
   @override
   Widget build(BuildContext context) {
@@ -18,11 +20,18 @@ class TransactionList extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.receipt_long, size: 64, color: Colors.grey.shade400),
+            Icon(
+              Icons.receipt_long,
+              size: 64,
+              color: Colors.grey.shade400,
+            ),
             const SizedBox(height: 16),
             Text(
               'No transactions yet!',
-              style: TextStyle(fontSize: 18, color: Colors.grey.shade600),
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.grey.shade600,
+              ),
             ),
           ],
         ),
@@ -34,19 +43,22 @@ class TransactionList extends StatelessWidget {
         return TransactionCard(
           transaction: transactions[index],
           onDelete: onDeleteTransaction,
+          onTap: onTransactionTap,
         );
       },
     );
   }
-}
+ }
 
 class TransactionCard extends StatelessWidget {
   final Transaction transaction;
   final Function(String) onDelete;
+  final Function(Transaction)? onTap;
   const TransactionCard({
     super.key,
     required this.transaction,
     required this.onDelete,
+    this.onTap,
   });
   @override
   Widget build(BuildContext context) {
@@ -54,6 +66,7 @@ class TransactionCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
       elevation: 2,
       child: ListTile(
+        onTap: onTap != null ? () => onTap!(transaction) : null,
         leading: CircleAvatar(
           radius: 24,
           backgroundColor: transaction.isExpense
@@ -75,7 +88,7 @@ class TransactionCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              '${transaction.isExpense ? '-' : '+'}\$ ${transaction.amount.toStringAsFixed(2)}',
+              '${transaction.isExpense ? '-' : '+'}\$${transaction.amount.toStringAsFixed(2)}',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: transaction.isExpense ? Colors.red : Colors.green,
@@ -90,7 +103,6 @@ class TransactionCard extends StatelessWidget {
       ),
     );
   }
-
   IconData getCategoryIcon(String category) {
     switch (category.toLowerCase()) {
       case 'food':
@@ -111,4 +123,4 @@ class TransactionCard extends StatelessWidget {
         return Icons.attach_money;
     }
   }
-}
+ }
